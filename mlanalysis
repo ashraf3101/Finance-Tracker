@@ -1,0 +1,36 @@
+function runML() {
+  const btn = document.getElementById('mlBtn');
+  const statusEl = document.getElementById('mlStatusText');
+  btn.disabled = true;
+  btn.textContent = '⏳ Running...';
+  statusEl.className = 'ml-status-text';
+  statusEl.textContent = 'Running ML analysis... please wait';
+
+  fetch('/api/run_ml', { method:'POST' })
+    .then(r => r.json())
+    .then(data => {
+      btn.disabled = false;
+      btn.textContent = '⚡ Run ML Analysis';
+      if (data.success) {
+        statusEl.className = 'ml-status-text success';
+        statusEl.textContent = '✅ ' + data.message;
+        showToast('✅ ML done! Refresh Power BI now.', 'success');
+      } else {
+        statusEl.className = 'ml-status-text error';
+        statusEl.textContent = '❌ ' + data.message;
+        showToast('❌ ML failed: ' + data.message, 'error');
+      }
+    })
+    .catch(() => {
+      btn.disabled = false;
+      btn.textContent = '⚡ Run ML Analysis';
+      statusEl.className = 'ml-status-text error';
+      statusEl.textContent = '❌ Could not connect to server';
+    });
+}
+
+//ml analysis
+<div class="ml-status">
+    <span style="font-size:0.8rem;color:var(--muted);font-family:'Syne',sans-serif;font-weight:600;">ML STATUS</span>
+    <span class="ml-status-text" id="mlStatusText">Click "Run ML Analysis" to detect anomalies and generate forecasts → then Refresh Power BI</span>
+  </div>
