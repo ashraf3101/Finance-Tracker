@@ -22,13 +22,6 @@ finance-tracker/
 │── requirements.txt    # Dependencies
 │── README.md           # Project documentation
 ⚙️ Installation
-Clone the repository:
-git clone https://github.com/your-username/finance-tracker.git
-Navigate to the folder:
-cd finance-tracker
-Install dependencies:
-pip install -r requirements.txt
-▶️ Usage
 
 Run the application:
 
